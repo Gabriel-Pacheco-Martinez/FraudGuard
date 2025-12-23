@@ -1,8 +1,8 @@
 <!-- PROJECT HEADER -->
 <h1>
 <p align="center">
-  <img src="img/detective2.jpg" alt="Project Logo" width="1024">
-  <br> Microservices
+  <img src="img/detective.png" alt="Project Logo">
+  <br> Fraudulent Sellers Detection
 </p>
 </h1>
 
