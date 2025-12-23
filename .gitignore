@@ -1,0 +1,13 @@
+# Byte-compiled files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+**/venv/
+.env
+
+# OS-specific
+.DS_Store
+
+# Notes
+notes.md
