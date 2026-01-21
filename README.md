@@ -23,4 +23,4 @@
 </p>
 
 ## About
-Being amazon an open market leaves a space for certain sellers to be fraudulent by offering products that are too good to be true.
+Amazon's open market leaves a space for certain sellers to be fraudulent by offering products that are too good to be true.

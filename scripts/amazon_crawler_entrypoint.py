@@ -6,7 +6,7 @@ import src.logger
 import logging
 from src.amazon.utils.write_results import Writer
 from src.amazon.crawler_helpers.driver import DriverManager
-from src.amazon.pages.product_page_scraper import ProductPage
+from src.amazon.pages.base_page_crawler import BasePage
 
 # Helper functions
 from src.amazon.utils import read_asins
@@ -50,23 +50,16 @@ def run():
         # ------
         # Go to main product page
         try:
-            product_page = ProductPage(driver, asin, PRODUCT_PAGE_URL)
-            product_page.crawl_page()
+            base_page = BasePage(driver, asin, PRODUCT_PAGE_URL)
+            sold_by_element = base_page.crawl_page()
         except VisitURLError as e:
-            logger.exception("Error processing product page for ASIN %s", asin)
+            logger.error("Error processing product page for ASIN %s", asin)
         except LoginError as e:
-            logger.exception("Error processing product page for ASIN %s", asin)
+            logger.error("Error processing product page for ASIN %s", asin)
         except ElementNotFoundError as e:
-            logger.exception("Error processing product page for ASIN %s", asin)
+            logger.error("Error processing product page for ASIN %s", asin)
         except Exception as e:
-            logger.exception("Error processing product page for ASIN %s", asin)
-
-        # ------
-        # Write results to json file
-        try:
-            results_writer.write_results(product_page)
-        except Exception as e:
-            logger.exception("Error writing results for ASIN %s", asin)
+            logger.error("Error processing product page for ASIN %s", asin)
 
         # ------
         # Close driver
@@ -74,4 +67,3 @@ def run():
 
     # ======
     print("Code finished")
-    

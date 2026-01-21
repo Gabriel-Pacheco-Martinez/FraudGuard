@@ -4,7 +4,7 @@ import time
 import logging
 
 # Classes
-from src.amazon.selectors import ProductPageSelectors
+from src.amazon.selectors import BasePageSelectors
 from src.amazon.selectors import LoginSelectors
 
 # Helper functions
@@ -25,7 +25,7 @@ from config.settings import AMAZON_PASSWORD
 
 logger = logging.getLogger(__name__)
 
-class ProductPage():
+class BasePage():
     def __init__(self, driver: object, asin: str, product_page_url: str):
         self.driver = driver
         self.asin = asin
@@ -78,33 +78,28 @@ class ProductPage():
         self._log_in()
 
         # Check for multiple sellers
-        multiple_sellers = bool(get_element(self.driver, By.ID, ProductPageSelectors.MULTIPLE_SELLERS_BOX_ID))
+        multiple_sellers = bool(get_element(self.driver, By.ID, BasePageSelectors.MULTIPLE_SELLERS_BOX_ID))
         if not multiple_sellers:
-            logger.info("No multiple sellers for this asin %s", self.asin)
+            logger.warning("No multiple sellers for this asin %s", self.asin)
 
         # Check product main body element
-        product_main_body_element = get_element(self.driver, By.ID, ProductPageSelectors.MAIN_CONTAINER_ID)
+        product_main_body_element = get_element(self.driver, By.ID, BasePageSelectors.MAIN_CONTAINER_ID)
         if not product_main_body_element:
             raise ElementNotFoundError("Product's main body element not found")
         
         # Get brand of the product
-        brand_element = get_element(self.driver, By.XPATH, ProductPageSelectors.BRAND_XPATH)
+        brand_element = get_element(self.driver, By.XPATH, BasePageSelectors.BRAND_XPATH)
         if brand_element:
             brand = brand_element.text.strip()
         else:
-            logger.info("No brand found for asin %s", self.asin)
+            logger.warning("No brand found for asin %s", self.asin)
             brand = None
 
         # Get current page seller information
-        seller_element = get_element(self.driver, By.ID, ProductPageSelectors.SELLER_ID)
+        seller_element = get_element(self.driver, By.ID, BasePageSelectors.SELLER_ID)
         if seller_element:
             print("Hello element exists!!")
         else:
             seller = None
             logger.info("No seller found for asin %s", self.asin)
         
-
-
-
-
-

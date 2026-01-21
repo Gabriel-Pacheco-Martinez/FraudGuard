@@ -8,7 +8,7 @@ class LoginSelectors:
     WRONG_PASSWORD_ID = "//div[contains(@class, 'a-alert-container')]//div[contains(@class, 'a-alert-content') and contains(text(), 'Your password is incorrect')]"
 
 # Selectors for main product page (amazon.com/dp/{ASIN})
-class ProductPageSelectors:
+class BasePageSelectors:
     MAIN_CONTAINER_ID = "dp-container"
     
     # Seller information
