@@ -1,0 +1,2 @@
+2026-01-21 13:50:43 - INFO - scripts.amazon_crawler_entrypoint - Crawler started
+2026-01-21 13:50:43 - INFO - src.amazon.utils.read_asins - Line is not an asin: FKFKDMAKFNKN
