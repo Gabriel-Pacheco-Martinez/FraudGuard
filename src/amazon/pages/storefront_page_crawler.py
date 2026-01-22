@@ -76,13 +76,6 @@ class StorefrontPage():
                 if not product_asin:
                     logger.warning("Asin attribute not found for product %s", product_element)
                     return
-
-                # Product information
-                seller["products"][product_asin] = {
-                    "reviews": [],
-                    "number_of_reviews": 0, 
-                    "average_rating_product_asin": 0
-                }
         
                 # Go to reviews page for product
                 reviews_page_for_product = ReviewsPage(self.driver, product_asin, REVIEW_PAGE_URL)

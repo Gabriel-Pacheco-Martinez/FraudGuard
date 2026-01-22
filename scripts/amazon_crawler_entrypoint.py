@@ -104,7 +104,6 @@ def run():
 
         # ------
         # Close driver
-        # driver_manager.close_driver()
         driver.quit()
 
     # ======
