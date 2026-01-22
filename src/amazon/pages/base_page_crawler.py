@@ -70,12 +70,12 @@ class BasePage():
         except Exception as e:
             raise LoginError(f"Failed to log in from product page: {self.url}") from e
 
-    def crawl_page(self):
+    def crawl_page(self) -> tuple[object, str]:
         # Visit URL
         self._visit_url()
 
         # Log in
-        self._log_in()
+        # self._log_in()
 
         # Check for multiple sellers
         multiple_sellers = bool(get_element(self.driver, By.ID, BasePageSelectors.MULTIPLE_SELLERS_BOX_ID))
@@ -98,8 +98,7 @@ class BasePage():
         # Get current page seller information
         seller_element = get_element(self.driver, By.ID, BasePageSelectors.SELLER_ID)
         if seller_element:
-            print("Hello element exists!!")
+            return seller_element, brand
         else:
-            seller = None
-            logger.info("No seller found for asin %s", self.asin)
+            raise ElementNotFoundError("Seller element not found")
         

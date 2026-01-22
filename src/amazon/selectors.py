@@ -22,6 +22,9 @@ class BasePageSelectors:
     # Storefront link
     STOREFRONT_LINK_XPATH = "//a[contains(@class,'a-link-normal') and contains(text(),'storefront')]"
 
+class ProductPageSelectors:
+    STOREFRONT_XPATH = "//a[contains(@class,'a-link-normal') and contains(text(),'storefront')]"
+
 # Selectors for offers listing page (amazon.com/gp/offer-listing/{ASIN})
 class OffersPageSelectors:
     OFFER_ITEMS_ID = "aod-offer"
@@ -30,6 +33,9 @@ class OffersPageSelectors:
 
 # Selectors for seller storefront page (amazon.com/sp?seller={SELLER_ID})
 class StorefrontSelectors:
+    BODY_TAG = "body"
+    
+    # Product items
     PRODUCT_ITEMS_XPATH = "//div[@role='listitem']"
     PRODUCT_ASIN_ATTR = "data-asin"
     

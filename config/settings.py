@@ -18,3 +18,5 @@ LOGS_FILE = "data/logs/app.log"
 
 # URLS
 PRODUCT_PAGE_URL = "https://www.amazon.com/dp/"
+
+REVIEW_PAGE_URL = "https://www.amazon.com/product-reviews/"
