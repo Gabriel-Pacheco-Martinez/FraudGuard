@@ -24,3 +24,7 @@
 
 ## About
 Amazon's open market leaves a space for certain sellers to be fraudulent by offering products that are too good to be true.
+
+- 1.- Get the pagination right [Check]
+- 2.- Check all elements in the storefront are present [Check]
+- 3.- Get the logs right (Understandable) [Check]
