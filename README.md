@@ -28,3 +28,4 @@ Amazon's open market leaves a space for certain sellers to be fraudulent by offe
 - 1.- Get the pagination right [Check]
 - 2.- Check all elements in the storefront are present [Check]
 - 3.- Get the logs right (Understandable) [Check]
+- 4.- Add reviews and average rating

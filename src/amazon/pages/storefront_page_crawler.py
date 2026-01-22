@@ -45,7 +45,7 @@ class StorefrontPage():
         """
         # Enter the storefront
         storefront_element.click()
-        logger.info("Entered seller storefrontpage")
+        logger.info("Entered seller store frontpage: %s", self.seller)
 
         # Create 
         seller: dict[str,any] = {
@@ -54,10 +54,8 @@ class StorefrontPage():
             "average_rating": None
         }
 
-        # Page number
-        page_counter = 1
-
         # Loop trough all products/pages
+        page_counter = 1
         while True:
 
             # Check for body
@@ -75,20 +73,20 @@ class StorefrontPage():
             for product_element in products_elements:
                 # Current product
                 product_asin = product_element.get_attribute("data-asin")
+                if not product_asin:
+                    logger.warning("Asin attribute not found for product %s", product_element)
+                    return
 
                 # Product information
                 seller["products"][product_asin] = {
                     "reviews": [],
+                    "number_of_reviews": 0, 
                     "average_rating_product_asin": 0
                 }
         
-                # # Go to reviews page for product
-                # reviews_page = ReviewsPage(self.driver, product_asin, REVIEW_PAGE_URL)
-                # reviews, average_rating = reviews_page.crawl_page() 
-
-                # # Assign data
-                # seller["products"][product_asin]["reviews"] = reviews
-                # seller["products"][product_asin]["average_rating_product_asin"] = average_rating
+                # Go to reviews page for product
+                reviews_page_for_product = ReviewsPage(self.driver, product_asin, REVIEW_PAGE_URL)
+                seller["products"][product_asin] = reviews_page_for_product.crawl_page()
                 
             # Click next page
             page_counter += 1

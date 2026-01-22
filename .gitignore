@@ -11,3 +11,6 @@ __pycache__/
 
 # Notes
 notes.md
+
+# Selectors
+src.amazon.selectors.py

@@ -1,18 +1,17 @@
-2026-01-22 12:11:08 - INFO - scripts.amazon_crawler_entrypoint - Crawler started
-2026-01-22 12:11:08 - INFO - scripts.amazon_crawler_entrypoint - [32m==================================================
-2026-01-22 12:11:08 - INFO - scripts.amazon_crawler_entrypoint - [🔍] Looking into telegram ASIN 1: B0CH8WL47B 
-2026-01-22 12:11:08 - INFO - scripts.amazon_crawler_entrypoint - ==================================================[0m
-2026-01-22 12:11:08 - INFO - WDM - ====== WebDriver manager ======
-2026-01-22 12:11:08 - INFO - WDM - Get LATEST chromedriver version for google-chrome
-2026-01-22 12:11:13 - INFO - WDM - Get LATEST chromedriver version for google-chrome
-2026-01-22 12:11:13 - INFO - WDM - Driver [/Users/gabriel/.wdm/drivers/chromedriver/mac64/144.0.7559.96/chromedriver-mac-arm64/chromedriver] found in cache
-2026-01-22 12:11:23 - INFO - src.amazon.pages.base_page_crawler - Entered base page for ASIN
-2026-01-22 12:11:33 - WARNING - src.amazon.pages.base_page_crawler - No multiple sellers for this asin B0CH8WL47B
-2026-01-22 12:11:43 - WARNING - src.amazon.pages.base_page_crawler - No brand found for asin B0CH8WL47B
-2026-01-22 12:11:43 - INFO - src.amazon.pages.base_page_crawler - Seller element found for asin B0CH8WL47B
-2026-01-22 12:11:45 - INFO - src.amazon.pages.seller_page_crawler - Entered seller page: KINDNATURE™
-2026-01-22 12:11:46 - INFO - src.amazon.pages.storefront_page_crawler - Entered seller storefrontpage
-2026-01-22 12:11:46 - INFO - src.amazon.pages.storefront_page_crawler - Looping over products for page 1
-2026-01-22 12:11:52 - INFO - src.amazon.pages.storefront_page_crawler - Looping over products for page 2
-2026-01-22 12:11:59 - INFO - src.amazon.pages.storefront_page_crawler - Looping over products for page 3
-2026-01-22 12:11:59 - INFO - src.amazon.utils.browsing - No next page in storefront
+2026-01-22 15:26:48 - INFO - scripts.amazon_crawler_entrypoint - Crawler started
+2026-01-22 15:26:48 - INFO - scripts.amazon_crawler_entrypoint - [32m==================================================
+2026-01-22 15:26:48 - INFO - scripts.amazon_crawler_entrypoint - [🔍] Looking into telegram ASIN 1: B0CH8WL47B 
+2026-01-22 15:26:48 - INFO - scripts.amazon_crawler_entrypoint - ==================================================[0m
+2026-01-22 15:26:48 - INFO - WDM - ====== WebDriver manager ======
+2026-01-22 15:26:49 - INFO - WDM - Get LATEST chromedriver version for google-chrome
+2026-01-22 15:26:49 - INFO - WDM - Get LATEST chromedriver version for google-chrome
+2026-01-22 15:26:49 - INFO - WDM - Driver [/Users/gabriel/.wdm/drivers/chromedriver/mac64/144.0.7559.96/chromedriver-mac-arm64/chromedriver] found in cache
+2026-01-22 15:26:54 - INFO - src.amazon.pages.base_page_crawler - ENTERED base page for ASIN
+2026-01-22 15:27:04 - WARNING - src.amazon.pages.base_page_crawler - No multiple sellers for this asin B0CH8WL47B
+2026-01-22 15:27:14 - WARNING - src.amazon.pages.base_page_crawler - No brand found for asin B0CH8WL47B
+2026-01-22 15:27:14 - INFO - src.amazon.pages.base_page_crawler - SELLER ELEMENT found for asin B0CH8WL47B
+2026-01-22 15:27:16 - INFO - src.amazon.pages.seller_page_crawler - Entered seller page: KINDNATURE™
+2026-01-22 15:27:17 - INFO - src.amazon.pages.storefront_page_crawler - Entered seller store frontpage: KINDNATURE™
+2026-01-22 15:27:17 - INFO - src.amazon.pages.storefront_page_crawler - Looping over products for page 1
+2026-01-22 15:27:28 - ERROR - scripts.amazon_crawler_entrypoint - [31mError processing product pages for ASIN B0CH8WL47B. Error: Message: 
+[0m

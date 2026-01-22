@@ -36,7 +36,7 @@ class BasePage():
         try:
             self.driver.get(self.url)
             time.sleep(random.randint(1, 5))
-            logger.info("Entered base page for ASIN")
+            logger.info("ENTERED base page for ASIN")
         except WebDriverException as e: # e is an instance of WebDriverException
             raise VisitURLError(f"Failed to open product page URL: {self.url}") from e # saves the original exception WebDriverException
         
@@ -99,7 +99,7 @@ class BasePage():
         # Get current page seller information
         seller_element = get_element(self.driver, By.ID, BasePageSelectors.SELLER_ID)
         if seller_element:
-            logger.info("Seller element found for asin %s", self.asin)
+            logger.info("BASE SELLER ELEMENT found for asin %s", self.asin)
             return seller_element, brand
         else:
             raise ElementNotFoundError("Seller element not found")
