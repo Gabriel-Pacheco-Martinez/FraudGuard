@@ -78,8 +78,8 @@ class StorefrontPage():
                     return
         
                 # Go to reviews page for product
-                reviews_page_for_product = ReviewsPage(self.driver, product_asin, REVIEW_PAGE_URL)
-                seller["products"][product_asin] = reviews_page_for_product.crawl_page()
+                # reviews_page_for_product = ReviewsPage(self.driver, product_asin, REVIEW_PAGE_URL)
+                # seller["products"][product_asin] = reviews_page_for_product.crawl_page()
                 
             # Click next page
             page_counter += 1

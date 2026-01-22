@@ -2,6 +2,7 @@
 from typing import Any
 import json
 from colorama import Fore, Style
+from pkg_resources import parse_version
 
 # Classes
 import src.logger
@@ -10,6 +11,7 @@ from src.amazon.utils.write_results import Writer
 from src.amazon.crawler_helpers.driver import DriverManager
 from src.amazon.pages.base_page_crawler import BasePage
 from src.amazon.pages.seller_page_crawler import SellerPage
+from src.amazon.pages.offers_page_crawler import OffersPage
 
 # Helper functions
 from src.amazon.utils import read_asins
@@ -17,10 +19,14 @@ from src.amazon.utils import read_asins
 # Exceptions
 from src.amazon.exceptions import VisitURLError, LoginError, ElementNotFoundError
 
+# Selenium
+from selenium.webdriver.remote.webelement import WebElement
+
 # Configuration
 from config.settings import ASINS_FILE_PATH
 from config.settings import RESULTS_FILE_PATH
 from config.settings import PRODUCT_PAGE_URL
+from config.settings import OFFERS_PAGE_URL
 
 logger = logging.getLogger(__name__)
 
@@ -66,12 +72,11 @@ def run():
         list_of_seller_elements: list = []
         try:
             base_page = BasePage(driver, asin, PRODUCT_PAGE_URL)
-            sold_by_element, brand = base_page.crawl_page()
-            list_of_seller_elements.append(sold_by_element)
+            seller_element, brand = base_page.crawl_page()
+            list_of_seller_elements.append(seller_element)
 
-            seller = sold_by_element.text.strip()
+            # Save brand
             telegram_asins[asin]["brand"] = brand
-            telegram_asins[asin]["sellers"][seller] = {}
 
         except VisitURLError as e:
             logger.error(Fore.RED + "Error processing base page for ASIN %s. Error: %s" + Style.RESET_ALL, asin, e)
@@ -83,11 +88,24 @@ def run():
             logger.error(Fore.RED + "Error processing base page for ASIN %s. Error: %s" + Style.RESET_ALL, asin, e)
 
         # ------
+        # Go to asin offers page 
+        try:
+            offers_page = OffersPage(driver, asin, OFFERS_PAGE_URL)
+            # seller_elements: list[WebElement] =  offers_page.crawl_page()
+            # list_of_seller_elements.extend(seller_elements)
+        except VisitURLError as e:
+            logger.error(Fore.RED + "Error processing offers page for ASIN %s. Error: %s" + Style.RESET_ALL, asin, e)
+        except ElementNotFoundError as e:
+            logger.error(Fore.RED + "Error processing offers page for ASIN %s. Error: %s" + Style.RESET_ALL, asin, e)
+        except Exception as e:
+            logger.error(Fore.RED + "Error processing offers page for ASIN %s. Error: %s" + Style.RESET_ALL, asin, e)
+
+        # ------
         # Go to product pages for all sold_by elements
+        print("Amount of sellers:", len(list_of_seller_elements))
         for seller_element in list_of_seller_elements:
             seller_name = seller_element.text.strip()
             telegram_asins[asin]["sellers"][seller_name] = {}
-            telegram_asins[asin]["brand"]= brand
 
             try:
                 seller_page = SellerPage(driver)

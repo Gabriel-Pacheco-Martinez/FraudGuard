@@ -18,6 +18,7 @@ LOGS_FILE = "data/logs/app.log"
 
 # URLS
 PRODUCT_PAGE_URL = "https://www.amazon.com/dp/"
+OFFERS_PAGE_URL = "https://www.amazon.com/gp/offer-listing/"
 REVIEW_PAGE_URL = "https://www.amazon.com/product-reviews/"
 
 # PROXIES
