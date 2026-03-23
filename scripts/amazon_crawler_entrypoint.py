@@ -2,7 +2,6 @@
 from typing import Any
 import json
 from colorama import Fore, Style
-from pkg_resources import parse_version
 
 # Classes
 import src.logger
@@ -12,6 +11,8 @@ from src.amazon.crawler_helpers.driver import DriverManager
 from src.amazon.pages.base_page_crawler import BasePage
 from src.amazon.pages.seller_page_crawler import SellerPage
 from src.amazon.pages.offers_page_crawler import OffersPage
+from src.amazon.selectors import BasePageSelectors
+from src.amazon.selectors import OffersPageSelectors
 
 # Helper functions
 from src.amazon.utils import read_asins
@@ -21,6 +22,7 @@ from src.amazon.exceptions import VisitURLError, LoginError, ElementNotFoundErro
 
 # Selenium
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.common.by import By
 
 # Configuration
 from config.settings import ASINS_FILE_PATH
@@ -69,13 +71,13 @@ def run():
 
         # ------
         # Go to asin base page
-        list_of_seller_elements: list = []
+        seller_names: list[dict] = []  # store dicts with name + source page
         try:
             base_page = BasePage(driver, asin, PRODUCT_PAGE_URL)
             seller_element, brand = base_page.crawl_page()
-            list_of_seller_elements.append(seller_element)
-
-            # Save brand
+            
+            # Only save the name, not the element
+            seller_names.append({"name": seller_element.text.strip(), "source": "base"})
             telegram_asins[asin]["brand"] = brand
 
         except VisitURLError as e:
@@ -91,8 +93,11 @@ def run():
         # Go to asin offers page 
         try:
             offers_page = OffersPage(driver, asin, OFFERS_PAGE_URL)
-            # seller_elements: list[WebElement] =  offers_page.crawl_page()
-            # list_of_seller_elements.extend(seller_elements)
+            seller_elements: list[WebElement] =  offers_page.crawl_page()
+
+            # Only save the names, not the elements
+            for el in seller_elements:
+                seller_names.append({"name": el.text.strip(), "source": "offers"})
         except VisitURLError as e:
             logger.error(Fore.RED + "Error processing offers page for ASIN %s. Error: %s" + Style.RESET_ALL, asin, e)
         except ElementNotFoundError as e:
@@ -102,18 +107,33 @@ def run():
 
         # ------
         # Go to product pages for all sold_by elements
-        print("Amount of sellers:", len(list_of_seller_elements))
-        for seller_element in list_of_seller_elements:
-            seller_name = seller_element.text.strip()
-            telegram_asins[asin]["sellers"][seller_name] = {}
+        # ------
+        print("Amount of sellers:", len(seller_names))
+        for seller_info in seller_names:
 
+            seller_name = seller_info["name"]
+            telegram_asins[asin]["sellers"][seller_name] = {}
             try:
+                # Re-visit the correct source page to get a fresh element
+                if seller_info["source"] == "base":
+                    driver.get(PRODUCT_PAGE_URL+asin)
+                    seller_element = driver.find_element(By.ID, BasePageSelectors.SELLER_ID)
+                else:
+                    driver.get(OFFERS_PAGE_URL+asin)
+                    fresh_elements = driver.find_elements(By.ID, OffersPageSelectors.SELLER_CONTAINER_ID)
+                    seller_element = next(
+                        el for el in fresh_elements if el.text.strip() == seller_name
+                    )
+
                 seller_page = SellerPage(driver)
-                seller_crawl_information: dict[str, Any] = seller_page.crawl_page(seller_element, seller_name)
+                seller_crawl_information = seller_page.crawl_page(seller_element, seller_name)
                 telegram_asins[asin]["sellers"][seller_name] = seller_crawl_information
+
             except ElementNotFoundError as e:
+                print("Element not found")
                 logger.error(Fore.RED + "Error processing product pages for ASIN %s. Error: %s" + Style.RESET_ALL, asin, e)
             except Exception as e:
+                print(e)
                 logger.error(Fore.RED +"Error processing product pages for ASIN %s. Error: %s" + Style.RESET_ALL, asin, e)
         
         # ------

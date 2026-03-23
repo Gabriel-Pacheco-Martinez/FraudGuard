@@ -38,6 +38,7 @@ class SellerPage():
         """
         # Enter product page through seller
         seller_element.click()
+        print("Entered seller page: %s", seller_name)
         logger.info("Entered seller page: %s", seller_name)
         
         # Visit storefront page
@@ -47,3 +48,4 @@ class SellerPage():
         storefront_page = StorefrontPage(self.driver, seller_name)
         seller_crawl_information: dict[str, Any] =storefront_page.crawl_page(storefront_element)
         return seller_crawl_information
+    

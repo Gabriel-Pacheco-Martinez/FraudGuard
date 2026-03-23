@@ -76,7 +76,7 @@ class BasePage():
         self._visit_url()
 
         # Log in
-        # self._log_in()
+        self._log_in()
 
         # Check for multiple sellers
         multiple_sellers = bool(get_element(self.driver, By.ID, BasePageSelectors.MULTIPLE_SELLERS_BOX_ID))
